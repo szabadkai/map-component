@@ -117,21 +117,3 @@ coordinate-visualizer {
     ```bash
     npm run dev
     ```
-
-## License
-
-MIT
-
-## Assets Directory
-
-The project includes the following assets:
-
-### Screenshots
-
-The `assets/images` directory contains screenshots of the map visualizations:
-
--   `sf-bay-area.png` - San Francisco Bay Area map with location markers
--   `european-cities.png` - European cities map with travel routes
--   `california-coast.png` - California coast map with combined markers and routes
-
-These screenshots showcase the monochrome design with the rgb(163, 123, 251) purple accent color that has been implemented throughout the application.
