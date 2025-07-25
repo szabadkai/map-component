@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinate Visualizer Demo</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .demo-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1, h2 {
+            color: #333;
+        }
+        
+        coordinate-visualizer {
+            display: block;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .custom-colors {
+            --pin-color: #9b59b6;
+            --pin-hover-color: #8e44ad;
+            --path-color: #e67e22;
+            --background-color: #ecf0f1;
+            --border-color: #bdc3c7;
+        }
+        
+        .large-view {
+            width: 100%;
+            height: 400px;
+        }
+        
+        code {
+            background: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Geographic Map Visualizer Web Component</h1>
+    
+    <div class="demo-section">
+        <h2>Location Markers</h2>
+        <p>Display geographic locations with custom icons and colors (San Francisco Bay Area):</p>
+        <coordinate-visualizer id="pins-demo" width="600" height="400"></coordinate-visualizer>
+        <pre><code>const coordinates = [
+  { lat: 37.7749, lng: -122.4194, label: "San Francisco", icon: "🏙️", color: "#e74c3c" },
+  { lat: 37.4419, lng: -122.1430, label: "Palo Alto", icon: "🏢", color: "#3498db" },
+  { lat: 37.3861, lng: -122.0839, label: "Mountain View", icon: "⛰️", color: "#27ae60" }
+];</code></pre>
+    </div>
+
+    <div class="demo-section">
+        <h2>Travel Routes</h2>
+        <p>Connect cities with stylized routes and labels (European cities):</p>
+        <coordinate-visualizer id="paths-demo" width="600" height="400"></coordinate-visualizer>
+        <pre><code>const routes = [
+  {
+    coordinates: [
+      { lat: 48.8566, lng: 2.3522 },   // Paris
+      { lat: 50.8503, lng: 4.3517 },   // Brussels
+      { lat: 52.3676, lng: 4.9041 },   // Amsterdam
+      { lat: 52.5200, lng: 13.4050 }   // Berlin
+    ],
+    style: { color: "#e74c3c", width: 4, opacity: 0.8 },
+    label: "European Tour"
+  }
+];</code></pre>
+    </div>
+
+    <div class="demo-section">
+        <h2>Combined Map View</h2>
+        <p>Show both markers and routes together (California Coast):</p>
+        <coordinate-visualizer id="combined-demo" width="600" height="400"></coordinate-visualizer>
+    </div>
+
+    <div class="demo-section">
+        <h2>Custom Styled Map</h2>
+        <p>Customize colors and appearance with CSS custom properties (Japan):</p>
+        <coordinate-visualizer id="styled-demo" class="custom-colors" width="600" height="400"></coordinate-visualizer>
+    </div>
+
+    <div class="demo-section">
+        <h2>World Map Interactive View</h2>
+        <p>Hover over markers to see coordinates and city information (World Capitals):</p>
+        <coordinate-visualizer id="large-demo" class="large-view"></coordinate-visualizer>
+    </div>
+
+    <script type="module">
+        import './src/coordinate-visualizer.ts';
+        
+        // Wait for component to be defined
+        await customElements.whenDefined('coordinate-visualizer');
+        console.log('CoordinateVisualizer component loaded');
+        
+        // San Francisco Bay Area coordinates for demo
+        const pinsDemo = document.getElementById('pins-demo');
+        pinsDemo.coordinates = [
+            { lat: 37.7749, lng: -122.4194, label: "San Francisco", icon: "🏙️", color: "#e74c3c" },
+            { lat: 37.4419, lng: -122.1430, label: "Palo Alto", icon: "🏢", color: "#3498db" },
+            { lat: 37.3861, lng: -122.0839, label: "Mountain View", icon: "⛰️", color: "#27ae60" },
+            { lat: 37.4848, lng: -122.2281, label: "Redwood City", icon: "🌲", color: "#f39c12" },
+            { lat: 37.5630, lng: -122.3255, label: "San Mateo", icon: "🏖️", color: "#9b59b6" }
+        ];
+
+        // European cities route
+        const pathsDemo = document.getElementById('paths-demo');
+        pathsDemo.routes = [
+            {
+                coordinates: [
+                    { lat: 48.8566, lng: 2.3522 },   // Paris
+                    { lat: 50.8503, lng: 4.3517 },   // Brussels
+                    { lat: 52.3676, lng: 4.9041 },   // Amsterdam
+                    { lat: 52.5200, lng: 13.4050 }   // Berlin
+                ],
+                style: { color: "#e74c3c", width: 4, opacity: 0.8 },
+                label: "European Tour"
+            },
+            {
+                coordinates: [
+                    { lat: 51.5074, lng: -0.1278 },  // London
+                    { lat: 48.8566, lng: 2.3522 },   // Paris
+                    { lat: 41.9028, lng: 12.4964 },  // Rome
+                    { lat: 40.7128, lng: -74.0060 }  // New York
+                ],
+                style: { color: "#3498db", width: 3, dashed: true },
+                label: "Atlantic Route"
+            }
+        ];
+
+        // Combined demo - California coastal route
+        const combinedDemo = document.getElementById('combined-demo');
+        combinedDemo.coordinates = [
+            { lat: 37.7749, lng: -122.4194, label: "San Francisco", icon: "🌉" },
+            { lat: 36.7783, lng: -119.4179, label: "Fresno", icon: "🌾" },
+            { lat: 34.0522, lng: -118.2437, label: "Los Angeles", icon: "🏖️" }
+        ];
+        combinedDemo.routes = [
+            {
+                coordinates: [
+                    { lat: 37.7749, lng: -122.4194 },
+                    { lat: 36.9741, lng: -122.0308 }, // Santa Cruz
+                    { lat: 36.6177, lng: -121.9166 }, // Monterey
+                    { lat: 35.6870, lng: -121.3281 }, // Paso Robles
+                    { lat: 34.0522, lng: -118.2437 }
+                ],
+                style: { color: "#27ae60", width: 3 },
+                label: "Pacific Coast Highway"
+            }
+        ];
+
+        // Custom styled demo - Japanese cities
+        const styledDemo = document.getElementById('styled-demo');
+        styledDemo.coordinates = [
+            { lat: 35.6762, lng: 139.6503, label: "Tokyo", icon: "🗼", color: "#e74c3c" },
+            { lat: 34.6937, lng: 135.5023, label: "Osaka", icon: "🏯", color: "#3498db" },
+            { lat: 35.0116, lng: 135.7681, label: "Kyoto", icon: "⛩️", color: "#f39c12" }
+        ];
+        styledDemo.routes = [
+            {
+                coordinates: [
+                    { lat: 35.6762, lng: 139.6503 },
+                    { lat: 35.3606, lng: 138.7274 }, // Mt. Fuji
+                    { lat: 34.6937, lng: 135.5023 },
+                    { lat: 35.0116, lng: 135.7681 }
+                ],
+                style: { color: "#e67e22", width: 4, opacity: 0.9 },
+                label: "Shinkansen Route"
+            }
+        ];
+
+        // Large demo - World capitals
+        const largeDemo = document.getElementById('large-demo');
+        largeDemo.coordinates = [
+            { lat: 40.7128, lng: -74.0060, label: "New York", icon: "🗽", color: "#e74c3c" },
+            { lat: 51.5074, lng: -0.1278, label: "London", icon: "🏰", color: "#3498db" },
+            { lat: 48.8566, lng: 2.3522, label: "Paris", icon: "🗼", color: "#9b59b6" },
+            { lat: 35.6762, lng: 139.6503, label: "Tokyo", icon: "🌸", color: "#f39c12" },
+            { lat: -33.8688, lng: 151.2093, label: "Sydney", icon: "🏄", color: "#27ae60" },
+            { lat: 55.7558, lng: 37.6176, label: "Moscow", icon: "🏛️", color: "#e67e22" },
+            { lat: 39.9042, lng: 116.4074, label: "Beijing", icon: "🏮", color: "#8e44ad" }
+        ];
+        largeDemo.routes = [
+            {
+                coordinates: [
+                    { lat: 40.7128, lng: -74.0060 },
+                    { lat: 51.5074, lng: -0.1278 },
+                    { lat: 48.8566, lng: 2.3522 },
+                    { lat: 55.7558, lng: 37.6176 },
+                    { lat: 39.9042, lng: 116.4074 },
+                    { lat: 35.6762, lng: 139.6503 }
+                ],
+                style: { color: "#e74c3c", width: 3, opacity: 0.7 },
+                label: "Around the World"
+            },
+            {
+                coordinates: [
+                    { lat: 35.6762, lng: 139.6503 },
+                    { lat: -33.8688, lng: 151.2093 },
+                    { lat: 40.7128, lng: -74.0060 }
+                ],
+                style: { color: "#3498db", width: 2, dashed: true },
+                label: "Pacific Route"
+            }
+        ];
+        largeDemo.width = 900;
+        largeDemo.height = 500;
+    </script>
+</body>
+</html>
