@@ -14,19 +14,19 @@ A customizable web component for visualizing geographic coordinates with markers
 
 ### Location Markers (San Francisco Bay Area)
 
-![San Francisco Bay Area Map](screenshots/sf-bay-area.png)
+![San Francisco Bay Area Map](assets/images/sf-bay-area.png)
 
 _Display geographic locations with custom icons and colors_
 
 ### Travel Routes (European Cities)
 
-![European Cities Map](screenshots/european-cities.png)
+![European Cities Map](assets/images/european-cities.png)
 
 _Connect cities with stylized routes and labels_
 
 ### Combined Map View (California Coast)
 
-![California Coast Map](screenshots/california-coast.png)
+![California Coast Map](assets/images/california-coast.png)
 
 _Show both markers and routes together_
 
